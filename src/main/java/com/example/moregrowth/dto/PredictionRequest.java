@@ -1,6 +1,6 @@
 package com.example.moregrowth.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class PredictionRequest {
 
@@ -48,11 +48,11 @@ public class PredictionRequest {
         this.phoneNumber = phoneNumber;
     }
     //
-    private Date date;
-    public Date getDate() {
+    private LocalDate date;
+    public LocalDate getDate() {
         return date;
     }
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
     private String status;

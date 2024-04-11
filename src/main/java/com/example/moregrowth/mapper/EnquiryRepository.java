@@ -1,4 +1,5 @@
 package com.example.moregrowth.mapper;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -16,4 +17,13 @@ public interface EnquiryRepository extends MongoRepository<Enquiry, String> {
 
     @Query
     public List<Enquiry> findByPhoneNumber(String phoneNumber);
+
+    public long countByTransactionOutcome(String prediction);
+
+    public long countByStatus(String string);
+
+    public long countByDate(Date date);
+
+    @Query(value = "{ 'date' : ?0, 'transactionOutcome' : ?1 }", count = true)
+    public long countByDateAndTransactionOutcome(Date date, String outcome);
 }

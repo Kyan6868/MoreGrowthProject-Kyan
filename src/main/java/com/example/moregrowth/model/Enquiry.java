@@ -1,6 +1,6 @@
 package com.example.moregrowth.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -242,10 +242,9 @@ public class Enquiry {
     private String status;
 
     @Field("Date")
-    private Date date;
+    private LocalDate date;
 
-
-
+ 
 
 
 
@@ -274,11 +273,11 @@ public class Enquiry {
         this.status = status;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -289,7 +288,7 @@ public class Enquiry {
         String decisionTimeframe, String creditScoreRange, String inquiryLength, String urgencyIndicator,
         String sentimentScore, String keywordsPresence, String dayOfTheWeek, String timeOfDay,
         String geographicalIndicator, String previousInteractions, String inquirySource,
-        String propertyTypeInterest, String budgetMentioned, String name, String phoneNumber, String status, Date date) {
+        String propertyTypeInterest, String budgetMentioned, String name, String phoneNumber, String status, LocalDate date) {
         this.text = text;
         this.contactMethod = contactMethod;
         this.customerIdentity = customerIdentity;

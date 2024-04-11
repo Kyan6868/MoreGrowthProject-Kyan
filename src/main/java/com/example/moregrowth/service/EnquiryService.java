@@ -1,5 +1,9 @@
 package com.example.moregrowth.service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,6 +54,34 @@ public class EnquiryService {
     public List<Enquiry> findByPhoneNumber(String phoneNumber) {
         return enquiryRepository.findByPhoneNumber(phoneNumber);
     }
+
+    public long countByTransactionOutcome() {
+        return  enquiryRepository.countByTransactionOutcome("Good");
+    }
+
+    public long countByStatus(String status) {
+        return enquiryRepository.countByStatus(status);
+    }
+
+    // 假设您的convertToLocalDateViaSqlDate方法如下定义：
+    public Date convertToLocalDateViaSqlDate(LocalDate localDate) {
+        ZoneId utcZoneId = ZoneId.of("UTC");
+        ZonedDateTime zdtStartOfDay = localDate.atStartOfDay(utcZoneId);
+        return Date.from(zdtStartOfDay.toInstant());
+    }
+
+    public long countByDateAndTransactionOutcome(LocalDate date) {
+        Date date1 = convertToLocalDateViaSqlDate(date);
+        /* if(enquiryRepository.countByDateAndTransactionOutcome(date1, "Good")==null)
+            return 0; */
+        return enquiryRepository.countByDateAndTransactionOutcome(date1, "Good");
+    }
+
+    public long countByDate(LocalDate yesterday) {
+        Date date1 = convertToLocalDateViaSqlDate(yesterday);
+        return enquiryRepository.countByDate(date1);
+    }
+
 
     
 

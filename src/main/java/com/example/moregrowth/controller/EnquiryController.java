@@ -1,5 +1,6 @@
 package com.example.moregrowth.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,11 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.moregrowth.model.Enquiry;
 import com.example.moregrowth.service.EnquiryService;
+
+
+
+
 
 
 
@@ -22,11 +26,12 @@ public class EnquiryController {
 
     @Autowired
     private EnquiryService enquiryService;
-
-    public String getMethodName(@RequestParam String param) {
-        return new String();
-    }
     
+
+    /*
+     * 
+     * Search Functions
+     */
     //view all the enquiries
     @GetMapping("/all")
     public List<Enquiry> getAll() {
@@ -48,10 +53,69 @@ public class EnquiryController {
     @GetMapping("/search/phoneNumber/{phoneNumber}")
     public List<Enquiry> getEnquiryByPhoneNumber(@PathVariable String phoneNumber) {
         return enquiryService.findByPhoneNumber(phoneNumber);
+
     }
+
+    /*
+     * 
+     * 
+     * data provided functions
+     */
+    //provide total goodleads 
+    @GetMapping("/totalgoodleads")
+    public long gettotalleads() {
+        return enquiryService.countByTransactionOutcome();
+    }
+    //provide Open Enquiry in Good leads
+    @GetMapping("/Openleads")
+    public long getOpenleads() {
+        return  enquiryService.countByStatus("Open");
+    }
+    //provide Closed Enquiry in Good leads
+    @GetMapping("/Closedleads")
+    public long getClosedleads() {
+        return  enquiryService.countByStatus("Closed");
+    }
+    //provide Lost Enquiry in Good leads
+    @GetMapping("/Lostleads")
+    public long getLostleads() {
+        return  enquiryService.countByStatus("Lost");
+    }
+    //calc Conversion rate use closed/total
+    @GetMapping("/ConversionRate")
+    public Double getConversionRate() {
+        return (double)enquiryService.countByStatus("Closed")/enquiryService.countByTransactionOutcome();
+    }
+    //get yesterday Good leads
+    @GetMapping("/goodleadseachday")
+    public long getGoodleadseachday() {
+        LocalDate today = LocalDate.now();
+        LocalDate yesterday = today.minusDays(1);
+        long result = enquiryService.countByDate(yesterday);
+        return result;
+    }
+    //get yesterday enquiries
+    @GetMapping("/yesterdayenquiry")
+    public long getyesterdayenquiry() {
+        LocalDate today = LocalDate.now();
+        //LocalDate today = LocalDate.of(2018,1 , 15);
+        LocalDate yesterday = today.minusDays(1);
+        long result =enquiryService.countByDate(yesterday);
+        return result;
+    }
+    
+    
     
 
 
+
+
+
+    /*
+     * 
+     * 
+     * Management Functions
+     */
     //update
     @PutMapping("/enquiries/{id}")
     public Enquiry updateEnquiry(@PathVariable String id, @RequestBody Enquiry enquiry) {
