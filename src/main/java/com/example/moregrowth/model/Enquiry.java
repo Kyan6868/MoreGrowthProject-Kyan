@@ -288,7 +288,7 @@ public class Enquiry {
         String decisionTimeframe, String creditScoreRange, String inquiryLength, String urgencyIndicator,
         String sentimentScore, String keywordsPresence, String dayOfTheWeek, String timeOfDay,
         String geographicalIndicator, String previousInteractions, String inquirySource,
-        String propertyTypeInterest, String budgetMentioned, String name, String phoneNumber, String status, LocalDate date) {
+        String propertyTypeInterest, String budgetMentioned, String name, String phoneNumber, String status) {
         this.text = text;
         this.contactMethod = contactMethod;
         this.customerIdentity = customerIdentity;
@@ -319,7 +319,6 @@ public class Enquiry {
         this.name = name;
         this.phoneNumber = phoneNumber; 
         this.status = status;
-        this.date = date;
     }
 
     public String getId() {
@@ -418,4 +417,20 @@ public class Enquiry {
         this.transactionOutcome = transactionOutcome;
     }
 
+    public void display(Enquiry enquiry){
+        System.out.println(enquiry.areaOfResidence);
+        System.out.println(enquiry.budgetMentioned);
+        System.out.println(enquiry.contactMethod);
+        System.out.println(enquiry.creditScoreRange);
+        System.out.println(enquiry.customerAge);
+        System.out.println(enquiry.customerIdentity);
+        System.out.println(enquiry.dayOfTheWeek);
+        System.out.println(enquiry.decisionTimeframe);
+        System.out.println(enquiry.employmentStatus);
+        System.out.println(enquiry.expenditureSituation);
+        System.out.println(enquiry.familySituation);
+        System.out.println(enquiry.financialReadiness);
+        System.out.println(enquiry.geographicalIndicator);
+        System.out.println(enquiry.id);
+    }
 }

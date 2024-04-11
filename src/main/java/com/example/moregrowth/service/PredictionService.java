@@ -31,17 +31,6 @@ public class PredictionService {
 
     public String runPythonScript(PredictionRequest request) {
         try {
-            // new enquiry for testing propose
-            /* Enquiry enquiry = new Enquiry("test", "Email", "Buyer", "35", "Sydney", 
-            "High", "Moderate", "Employed", 
-            "Renting", "Personal Use", "No", 
-            "Married with Kids", "Pre-approved", "Email", 
-            "3-6 months", "750-800", "12", 
-            "Soon", "0.5", "test", 
-            "Tuesday", "Morning", "Brisbane",
-            "2", "Direct Call", "Investment Property",
-            "No budget mentioned"); */
-
             //connect and get users' data
             Enquiry enquiry = new Enquiry(
                 request.getText(),
@@ -73,13 +62,10 @@ public class PredictionService {
                 request.getBudgetMentioned(),
                 request.getName(),
                 request.getPhoneNumber(),
-                request.getStatus(),
-                request.getDate()
+                request.getStatus()
             );
 
-            //check if this data is duplicated
-            
-                    
+            enquiry.display(enquiry);
             // transform the data to json
             ObjectMapper objectMapper = new ObjectMapper();
             String enquiryJson = objectMapper.writeValueAsString(enquiry);
@@ -87,6 +73,7 @@ public class PredictionService {
             // write the data into temp file
             Path tempFile = Files.createTempFile("enquiry", ".json");
             Files.write(tempFile, enquiryJson.getBytes(StandardCharsets.UTF_8));
+            //enquiry.display(enquiry);
 
             // print info for testing 
             System.out.println("Temporary file for JSON created at: " + tempFile);

@@ -50,6 +50,7 @@ public class PredictionRequest {
     //
     private LocalDate date;
     public LocalDate getDate() {
+        LocalDate date = LocalDate.now();
         return date;
     }
     public void setDate(LocalDate date) {
