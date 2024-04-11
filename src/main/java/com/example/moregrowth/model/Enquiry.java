@@ -418,8 +418,4 @@ public class Enquiry {
         this.transactionOutcome = transactionOutcome;
     }
 
-    //public void setId(ObjectId id2) {
-       // this.id = id2;
-    //}
-   
 }

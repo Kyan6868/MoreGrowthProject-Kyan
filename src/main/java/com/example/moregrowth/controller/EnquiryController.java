@@ -8,12 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.moregrowth.model.Enquiry;
 import com.example.moregrowth.service.EnquiryService;
+
+
 
 
 
@@ -62,9 +65,9 @@ public class EnquiryController {
      * data provided functions
      */
     //provide total goodleads 
-    @GetMapping("/totalgoodleads")
-    public long gettotalleads() {
-        return enquiryService.countByTransactionOutcome();
+    @GetMapping("/totalgoodleads/{leads}")
+    public long gettotalleads(@PathVariable String leads) {
+        return enquiryService.countByTransactionOutcome(leads);
     }
     //provide Open Enquiry in Good leads
     @GetMapping("/Openleads")
@@ -84,7 +87,7 @@ public class EnquiryController {
     //calc Conversion rate use closed/total
     @GetMapping("/ConversionRate")
     public Double getConversionRate() {
-        return (double)enquiryService.countByStatus("Closed")/enquiryService.countByTransactionOutcome();
+        return (double)enquiryService.countByStatus("Closed")/enquiryService.countByTransactionOutcome("Good");
     }
     //get yesterday Good leads
     @GetMapping("/goodleadseachday")
@@ -103,13 +106,30 @@ public class EnquiryController {
         long result =enquiryService.countByDate(yesterday);
         return result;
     }
+    //percentage of all the contact method
+    @GetMapping("/Contactpercentage/{method}")
+    public Double getContactpercentage(@PathVariable String method) {
+        return (double)enquiryService.countByContactMethod(method)/enquiryService.getTotalEnquiry();
+    }
+
+
+    /*
+     * 
+     * 
+     * List both Good and bad leads
+     */
+    @PostMapping("/listgood")
+    public List<Enquiry> listGood() {
+        return enquiryService.findbyTransactionOutcome("Good");
+    }
+
+    @PostMapping("/listbad")
+    public List<Enquiry> listbad() {
+        return enquiryService.findbyTransactionOutcome("Bad");
+    }
     
+
     
-    
-
-
-
-
 
     /*
      * 

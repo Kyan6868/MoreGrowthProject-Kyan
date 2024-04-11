@@ -12,6 +12,8 @@ import com.example.moregrowth.model.Enquiry;
 @Repository
 public interface EnquiryRepository extends MongoRepository<Enquiry, String> {
     // Seems basic methods are all included in the MongoDB original library
+
+
     @Query
     public List<Enquiry> findByName(String name);
 
@@ -24,6 +26,12 @@ public interface EnquiryRepository extends MongoRepository<Enquiry, String> {
 
     public long countByDate(Date date);
 
+    public long countByContactMethod(String contactMethod);
+
     @Query(value = "{ 'date' : ?0, 'transactionOutcome' : ?1 }", count = true)
     public long countByDateAndTransactionOutcome(Date date, String outcome);
+
+    @Query
+    public List<Enquiry> findByTransactionOutcome(String transactionOutcome);
+
 }

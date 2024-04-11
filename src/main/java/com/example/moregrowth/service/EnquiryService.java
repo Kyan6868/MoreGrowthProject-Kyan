@@ -17,7 +17,7 @@ public class EnquiryService {
 
     @Autowired
     private static EnquiryRepository enquiryRepository;
-
+    
     public EnquiryService(EnquiryRepository enquiryRepository) {
         this.enquiryRepository = enquiryRepository;
     }
@@ -55,8 +55,8 @@ public class EnquiryService {
         return enquiryRepository.findByPhoneNumber(phoneNumber);
     }
 
-    public long countByTransactionOutcome() {
-        return  enquiryRepository.countByTransactionOutcome("Good");
+    public long countByTransactionOutcome(String leads) {
+        return  enquiryRepository.countByTransactionOutcome(leads);
     }
 
     public long countByStatus(String status) {
@@ -80,6 +80,18 @@ public class EnquiryService {
     public long countByDate(LocalDate yesterday) {
         Date date1 = convertToLocalDateViaSqlDate(yesterday);
         return enquiryRepository.countByDate(date1);
+    }
+
+    public long countByContactMethod(String method){
+        return enquiryRepository.countByContactMethod(method);
+    }
+
+    public long getTotalEnquiry() {
+        return enquiryRepository.count();
+    }
+
+    public List<Enquiry> findbyTransactionOutcome(String string) {
+        return enquiryRepository.findByTransactionOutcome(string);
     }
 
 
